@@ -5,11 +5,11 @@
 #include "constants.h"
 
 Ghost::Ghost(int row, int col)
-    : ghost_{false, false, true, OnOffTimer(), '.', row, col, 0, row, col} {}
+    : DynamicObj("ghost", row, col), ghost_{false, false, true, OnOffTimer(), '.', row, col} {}
 
-void Ghost::GhostAction(vector<wstring>& level_map) {
+void Ghost::Action(vector<wstring>& level_map) {
   const wchar_t north_neighbour =
-      level_map[ghost_.location_row - 1][ghost_.location_col];
+      level_map[dynamic_obj.location_row - 1][ghost_.location_col];
   const wchar_t east_neighbour =
       level_map[ghost_.location_row][ghost_.location_col + 1];
   const wchar_t south_neighbour =

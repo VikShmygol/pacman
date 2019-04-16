@@ -39,6 +39,9 @@
     <ClInclude Include="common_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="object_class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -60,6 +63,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="on_off_timer_class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="object_class.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

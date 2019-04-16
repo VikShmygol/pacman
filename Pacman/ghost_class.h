@@ -1,7 +1,6 @@
 #pragma once
-#include <string>
-#include <vector>
 #include <map>
+#include "dynamic_obj_class.h"
 #include "on_off_timer_class.h"
 
 using namespace std;
@@ -12,18 +11,15 @@ struct GhostData {
   bool first_move;
   OnOffTimer timer_to_blink;
   wchar_t substitute_symbol;
-  int location_row;
-  int location_col;
-  int direction;
-  int resurrection_row;
-  int resurrection_col;
+  const int resurrection_row;
+  const int resurrection_col;
 };
 
-class Ghost {
+class Ghost : public DynamicObj {
  public:
   Ghost(int location_row, int location_col);
 
-  void GhostAction(vector<wstring>& level_map);
+  void Action(vector<wstring>& level_map) override;
 
  private:
   GhostData ghost_;
