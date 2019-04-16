@@ -5,17 +5,21 @@
 #include "constants.h"
 
 Ghost::Ghost(int row, int col)
-    : DynamicObj("ghost", row, col), ghost_{false, false, true, OnOffTimer(), '.', row, col} {}
+    : Object("ghost", row, col), ghost_{false, false, true, 0,
+                                        row,   col,   '.',  OnOffTimer()} {}
 
 void Ghost::Action(vector<wstring>& level_map) {
+  int curr_location_row = get_location_row();
+  int curr_location_col = get_location_col();
+
   const wchar_t north_neighbour =
-      level_map[dynamic_obj.location_row - 1][ghost_.location_col];
+      level_map[curr_location_row - 1][curr_location_col];
   const wchar_t east_neighbour =
-      level_map[ghost_.location_row][ghost_.location_col + 1];
+      level_map[curr_location_row][curr_location_col + 1];
   const wchar_t south_neighbour =
-      level_map[ghost_.location_row + 1][ghost_.location_col];
+      level_map[curr_location_row + 1][curr_location_col];
   const wchar_t west_neighbour =
-      level_map[ghost_.location_row][ghost_.location_col - 1];
+      level_map[curr_location_row][curr_location_col - 1];
 
   // quiting in case if ghost is surrounded by other ghosts or by walls
   if (!FindCharacter(kGhostPlaceToMove, north_neighbour) &&
@@ -33,16 +37,16 @@ void Ghost::Action(vector<wstring>& level_map) {
     ghost_.direction = GhostMoveDirection(direction_neighbours_map);
   
   if (!ghost_.first_move) {
-    level_map[ghost_.location_row][ghost_.location_col] =
+      level_map[curr_location_row][curr_location_col] =
         ghost_.substitute_symbol;
   } else {
-    level_map[ghost_.location_row][ghost_.location_col] = L' ';
+    level_map[curr_location_row][curr_location_col] = L' ';
     ghost_.first_move = false;
   }
 
   ghost_.substitute_symbol = direction_neighbours_map.at(ghost_.direction);
 
-  ghost_.blinking = true;
+ // ghost_.blinking = true;
   wchar_t GhostLook = kGhostLook;
 
   if (ghost_.blinking && !ghost_.timer_to_blink.Activate(700ms, 300ms)) {
@@ -51,22 +55,25 @@ void Ghost::Action(vector<wstring>& level_map) {
 
   switch (ghost_.direction) {
     case 0:
-      level_map[--ghost_.location_row][ghost_.location_col] = GhostLook;
+      level_map[--curr_location_row][curr_location_col] = GhostLook;
+      set_location_row(curr_location_row);
       break;
     case 1:
-      level_map[ghost_.location_row][++ghost_.location_col] = GhostLook;
+      level_map[curr_location_row][++curr_location_col] = GhostLook;
+      set_location_col(curr_location_col);
       break;
     case 2:
-      level_map[++ghost_.location_row][ghost_.location_col] = GhostLook;
+      level_map[++curr_location_row][curr_location_col] = GhostLook;
+      set_location_row(curr_location_row);
       break;
     case 3:
-      level_map[ghost_.location_row][--ghost_.location_col] = GhostLook;
+      level_map[curr_location_row][--curr_location_col] = GhostLook;
+      set_location_col(curr_location_col);
       break;
   }
 }
 
-int Ghost::GhostMoveDirection(const map<int, wchar_t>& neighbours_map
-                       ) {
+int Ghost::GhostMoveDirection(const map<int, wchar_t>& neighbours_map) {
   const int side_direction_1 = (ghost_.direction + 1) % 4;
   const int side_direction_2 = (ghost_.direction + 3) % 4;
   const int opposite_direction = (ghost_.direction + 2) % 4;

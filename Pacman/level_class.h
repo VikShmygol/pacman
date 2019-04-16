@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "ghost_class.h"
+#include "pacman_class.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ struct LevelData {
   int score = 0;
   int num_dots = 0;
   vector<Ghost> ghosts;
+  vector<Pacman> pacman;
 };
 
 class Level {

@@ -13,8 +13,8 @@
 void Level::LoadLevel(const string& level_filename,
                       vector<wstring>& level_map) {
 
-// Extracting the map data from Unicode file 
-// into the vector of <wstring>
+/* Extracting the map data from Unicode file 
+   into the vector of <wstring> */
   wstring line;
   unsigned int size_rows = 0, size_cols = 0;
   locale::global(std::locale("fr_FR.UTF-8"));
@@ -42,15 +42,21 @@ void Level::LoadLevel(const string& level_filename,
         case 'M':
           level_.ghosts.push_back(Ghost(i, j));
           break;
-      }
+        case '>':
+          //level_.pacman.set_location_col(i);
+          //level_.pacman.set_location_row(j);
+          level_.pacman.push_back(Pacman(i, j));
+          break;
+	  }
     }
   }
 }
 
 void Level::ProcessingLevel(vector<wstring>& map) {
    for (auto& ghost : level_.ghosts) {
-    ghost.GhostAction(map);
-  }
+    ghost.Action(map);
+	  }
+  level_.pacman[0].Action(map);
 }
 int Level::get_pacman_lives() const { return level_.pacman_lives; }
 void Level::decrement_pacman_lives() { level_.pacman_lives--; };

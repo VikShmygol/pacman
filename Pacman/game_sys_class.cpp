@@ -7,7 +7,7 @@
 #include <thread>
 #include <chrono>
 
-GameSys::GameSys(){};
+//GameSys::GameSys(){};
 
 void GameSys::GameProcessing(const vector<string>& level_filename_vector,
                              vector<wstring>& map) {
@@ -37,6 +37,6 @@ void GameSys::GameProcessing(const vector<string>& level_filename_vector,
     for (wstring& s : map) {
       wcout << s << endl;
     }
-    this_thread::sleep_for(chrono::milliseconds(500));
+    this_thread::sleep_for(chrono::milliseconds(100));
   }
 }

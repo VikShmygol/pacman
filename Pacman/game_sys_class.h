@@ -12,13 +12,12 @@ struct GameData {
   Level level;
   unsigned int current_level = 0;
   vector<wstring> map;
- // vector<Ghost> ghosts;
 };
 
 
 class GameSys {
  public:
- GameSys();
+// GameSys();
   void GameProcessing(const vector<string>& level_filename_vector,
                       vector<wstring>& map);
 

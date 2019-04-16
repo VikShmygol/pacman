@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include "dynamic_obj_class.h"
+#include "object_class.h"
 #include "on_off_timer_class.h"
 
 using namespace std;
@@ -9,13 +9,14 @@ struct GhostData {
   bool locked;
   bool blinking;
   bool first_move;
-  OnOffTimer timer_to_blink;
-  wchar_t substitute_symbol;
+  int direction;
   const int resurrection_row;
   const int resurrection_col;
+  wchar_t substitute_symbol;
+  OnOffTimer timer_to_blink;
 };
 
-class Ghost : public DynamicObj {
+class Ghost : public Object {
  public:
   Ghost(int location_row, int location_col);
 
