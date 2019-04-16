@@ -25,8 +25,8 @@ class Ghost : public Object {
  private:
   GhostData ghost_;
 
-// This method returns a direction to move for ghost
-// The input is a map of neighbours for each direction
-// and direction that must be skipped (only if direction_to_avoid != 5)
+/* This method returns a direction to move for ghost
+   The input is a map of neighbours for each direction
+   and direction that must be skipped (only if direction_to_avoid != 5) */
   int GhostMoveDirection(const map<int, wchar_t>&);
 };

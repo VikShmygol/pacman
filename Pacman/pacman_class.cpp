@@ -69,14 +69,3 @@ void Pacman::Action(vector<wstring>& level_map) {
   return;
 }
 
-/*void Warrior::die() { is_alive_ = false; }
-
-void LookForMonsterToKill(pair<int, int> monster_to_kill_coordinates,
-                          vector<Monster>& monsters) {
-  for (Monster& m : monsters) {
-    if (monster_to_kill_coordinates == m.get_location()) {
-      m.die();
-      break;
-    }
-  }
-}*/
