@@ -8,7 +8,7 @@ struct Timer {
 
 class OnOffTimer {
  public:
-  OnOffTimer();
+
   bool Activate(milliseconds time_on, milliseconds time_off);
 
 private:

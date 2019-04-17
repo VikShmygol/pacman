@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "on_off_timer_class.h"
 
-OnOffTimer::OnOffTimer(){};
-
 bool OnOffTimer::Activate(milliseconds time_on, milliseconds time_off) {
   milliseconds duration = duration_cast<milliseconds>(steady_clock::now() -
                                                       timer_.cycle_start_time);

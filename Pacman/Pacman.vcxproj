@@ -156,6 +156,7 @@
     <ClInclude Include="collision_class.h" />
     <ClInclude Include="common_functions.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="delay_off_timer_class.h" />
     <ClInclude Include="object_class.h" />
     <ClInclude Include="game_sys_class.h" />
     <ClInclude Include="ghost_class.h" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision_class.cpp" />
+    <ClCompile Include="delay_off_timer_class.cpp" />
     <ClCompile Include="object_class.cpp" />
     <ClCompile Include="game_sys_class.cpp" />
     <ClCompile Include="ghost_class.cpp" />

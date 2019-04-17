@@ -1,8 +1,9 @@
+#include "pch.h"
 #include "ghost_class.h"
 #include <random>
 #include "common_functions.h"
 #include "constants.h"
-#include "pch.h"
+
 
 Ghost::Ghost(int row, int col)
     : DynObject("ghost", row, col), ghost_{false, false,       true,
@@ -49,7 +50,7 @@ void Ghost::Action(vector<wstring>& level_map) {
   // ghost_.blinking = true;
   wchar_t GhostLook = kGhostLook;
 
-  if (ghost_.blinking && !ghost_.timer_to_blink.Activate(700ms, 300ms)) {
+  if (ghost_.is_scared && !ghost_.timer_to_blink.Activate(700ms, 300ms)) {
     GhostLook = ghost_.substitute_symbol;
   }
 
@@ -71,6 +72,16 @@ void Ghost::Action(vector<wstring>& level_map) {
       set_location_col(curr_location_col);
       break;
   }
+}
+void Ghost::set_to_scared() { ghost_.is_scared = true; }
+bool Ghost::get_is_scared() const { return ghost_.is_scared; }
+void Ghost::reset_scared() { ghost_.is_scared = false; }
+void Ghost::Resurrection(vector<wstring>& map) {
+  map[get_location_row()][get_location_col()] = ghost_.substitute_symbol;
+  map[ghost_.resurrection_row][ghost_.resurrection_col] = kGhostLook;
+  set_location_row(ghost_.resurrection_row);
+  set_location_col(ghost_.resurrection_col);
+  ghost_.is_scared = false;
 }
 
 int Ghost::GhostMoveDirection(const map<int, wchar_t>& neighbours_map) {

@@ -37,6 +37,7 @@ void GameSys::GameProcessing(const vector<string>& level_filename_vector,
     for (wstring& s : map) {
       wcout << s << endl;
     }
+    cout << "Score: " << game_.level.get_score();
     this_thread::sleep_for(chrono::milliseconds(100));
   }
 }

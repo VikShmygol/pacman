@@ -7,7 +7,7 @@ using namespace std;
 
 struct GhostData {
   bool locked;
-  bool blinking;
+  bool is_scared;
   bool first_move;
   int direction;
   const int resurrection_row;
@@ -21,6 +21,10 @@ class Ghost : public DynObject {
   Ghost(int location_row, int location_col);
 
   void Action(vector<wstring>& level_map) override;
+  void set_to_scared();
+  void reset_scared();
+  bool get_is_scared() const;
+  void Resurrection(vector<wstring>& map);
 
  private:
   GhostData ghost_;

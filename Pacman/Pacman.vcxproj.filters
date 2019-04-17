@@ -45,6 +45,9 @@
     <ClInclude Include="collision_class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="delay_off_timer_class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="collision_class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="delay_off_timer_class.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
