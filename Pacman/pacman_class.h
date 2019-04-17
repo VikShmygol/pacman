@@ -14,7 +14,7 @@ class Pacman : public DynObject {
  
   Pacman(int location_row, int location_col);
 
-  void Action(vector<wstring>& level_map) override;
+ Collision Action(vector<wstring>& level_map) override;
 
   private:
   PacmanData pacman_;

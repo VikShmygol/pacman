@@ -1,4 +1,5 @@
-﻿#include "level_class.h"
+﻿#include "pch.h"
+#include "level_class.h"
 #include <codecvt>
 #include <fstream>
 #include <iostream>
@@ -7,7 +8,8 @@
 #include <string>
 #include "common_functions.h"
 #include "ghost_class.h"
-#include "pch.h"
+#include "constants.h"
+
 
 void Level::LoadLevel(const string& level_filename,
                       vector<wstring>& level_map) {
@@ -33,11 +35,11 @@ void Level::LoadLevel(const string& level_filename,
   for (int i = 0; i < size_rows; ++i) {
     for (int j = 0; j < size_cols; ++j) {
       switch (level_map[i][j]) {
-        case '0':
-        case '∙':
+        case kSuperDotLook:
+        case kRegularDotLook:
           level_.num_dots++;
           break;
-        case 'M':
+        case kGhostLook:
           level_.ghosts.push_back(Ghost(i, j));
           break;
         case '>':
@@ -52,16 +54,27 @@ void Level::LoadLevel(const string& level_filename,
 
 void Level::ProcessingLevel(vector<wstring>& map) {
   for (auto& ghost : level_.ghosts) {
-    ghost.Action(map);
+    level_.collisions.push_back(ghost.Action(map));
   }
-  level_.pacman[0].Action(map);
+
+  level_.collisions.push_back(level_.pacman[0].Action(map));
+
   if (level_.timer_to_scare_ghosts.Check(10000ms)) {
     EncourageGhosts();
   }
+
+  for (auto& collision : level_.collisions) {
+    collision.Processing(this, map, level_.ghosts);
+  }
+  level_.collisions.clear();
 }
+
 int Level::get_pacman_lives() const { return level_.pacman_lives; }
+
 void Level::decrement_pacman_lives() { level_.pacman_lives--; };
+
 int Level::get_num_dots() const { return level_.num_dots; }
+
 void Level::update_score(int points) {
   level_.num_dots--;
   level_.score += points;
@@ -78,3 +91,6 @@ void Level::EncourageGhosts() {
     g.reset_scared();
   }
 }
+/*void Level::AddCollision(Collision collision) {
+  level_.collisions.push_back(collision);
+}*/

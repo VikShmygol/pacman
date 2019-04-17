@@ -20,7 +20,7 @@ class Ghost : public DynObject {
  public:
   Ghost(int location_row, int location_col);
 
-  void Action(vector<wstring>& level_map) override;
+  Collision Action(vector<wstring>& level_map) override;
   void set_to_scared();
   void reset_scared();
   bool get_is_scared() const;

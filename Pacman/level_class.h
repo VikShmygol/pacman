@@ -16,6 +16,7 @@ struct LevelData {
   int num_dots = 0;
   vector<Ghost> ghosts;
   vector<Pacman> pacman;
+  vector<Collision> collisions;
   DelayOffTimer timer_to_scare_ghosts;
 };
 

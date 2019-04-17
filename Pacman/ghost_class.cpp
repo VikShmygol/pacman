@@ -10,7 +10,7 @@ Ghost::Ghost(int row, int col)
                                                      0,     row,         col,
                                                      '.',   OnOffTimer()} {}
 
-void Ghost::Action(vector<wstring>& level_map) {
+Collision Ghost::Action(vector<wstring>& level_map) {
   int curr_location_row = get_location_row();
   int curr_location_col = get_location_col();
 
@@ -28,7 +28,7 @@ void Ghost::Action(vector<wstring>& level_map) {
       !FindCharacter(kGhostPlaceToMove, east_neighbour) &&
       !FindCharacter(kGhostPlaceToMove, west_neighbour) &&
       !FindCharacter(kGhostPlaceToMove, south_neighbour)) {
-    return;
+    return Collision(this, 0, 0, L' ');
   }
 
   const map<int, wchar_t> direction_neighbours_map{{0, north_neighbour},
@@ -72,6 +72,7 @@ void Ghost::Action(vector<wstring>& level_map) {
       set_location_col(curr_location_col);
       break;
   }
+  return Collision(this, 0, 0, L' ');
 }
 void Ghost::set_to_scared() { ghost_.is_scared = true; }
 bool Ghost::get_is_scared() const { return ghost_.is_scared; }
