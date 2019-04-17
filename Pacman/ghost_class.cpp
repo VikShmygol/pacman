@@ -1,12 +1,13 @@
-#include "pch.h"
 #include "ghost_class.h"
 #include <random>
 #include "common_functions.h"
 #include "constants.h"
+#include "pch.h"
 
 Ghost::Ghost(int row, int col)
-    : Object("ghost", row, col), ghost_{false, false, true, 0,
-                                        row,   col,   '.',  OnOffTimer()} {}
+    : DynObject("ghost", row, col), ghost_{false, false,       true,
+                                                     0,     row,         col,
+                                                     '.',   OnOffTimer()} {}
 
 void Ghost::Action(vector<wstring>& level_map) {
   int curr_location_row = get_location_row();
@@ -34,11 +35,10 @@ void Ghost::Action(vector<wstring>& level_map) {
                                                    {2, south_neighbour},
                                                    {3, west_neighbour}};
 
-    ghost_.direction = GhostMoveDirection(direction_neighbours_map);
-  
+  ghost_.direction = GhostMoveDirection(direction_neighbours_map);
+
   if (!ghost_.first_move) {
-      level_map[curr_location_row][curr_location_col] =
-        ghost_.substitute_symbol;
+    level_map[curr_location_row][curr_location_col] = ghost_.substitute_symbol;
   } else {
     level_map[curr_location_row][curr_location_col] = L' ';
     ghost_.first_move = false;
@@ -46,11 +46,11 @@ void Ghost::Action(vector<wstring>& level_map) {
 
   ghost_.substitute_symbol = direction_neighbours_map.at(ghost_.direction);
 
- // ghost_.blinking = true;
+  // ghost_.blinking = true;
   wchar_t GhostLook = kGhostLook;
 
   if (ghost_.blinking && !ghost_.timer_to_blink.Activate(700ms, 300ms)) {
-      GhostLook = ghost_.substitute_symbol;
+    GhostLook = ghost_.substitute_symbol;
   }
 
   switch (ghost_.direction) {
@@ -79,23 +79,20 @@ int Ghost::GhostMoveDirection(const map<int, wchar_t>& neighbours_map) {
   const int opposite_direction = (ghost_.direction + 2) % 4;
   int direction_to_avoid = opposite_direction;
 
-   if (!FindCharacter(kGhostPlaceToMove,
-                            neighbours_map.at(side_direction_1)) &&
-             !FindCharacter(kGhostPlaceToMove,
-                            neighbours_map.at(side_direction_2)) &&
-             !FindCharacter(kGhostPlaceToMove,
-                            neighbours_map.at(ghost_.direction))) {
+  if (!FindCharacter(kGhostPlaceToMove, neighbours_map.at(side_direction_1)) &&
+      !FindCharacter(kGhostPlaceToMove, neighbours_map.at(side_direction_2)) &&
+      !FindCharacter(kGhostPlaceToMove, neighbours_map.at(ghost_.direction))) {
     return opposite_direction;
   } else if (!FindCharacter(kGhostPlaceToMove,
                             neighbours_map.at(side_direction_1)) &&
              !FindCharacter(kGhostPlaceToMove,
                             neighbours_map.at(side_direction_2)) &&
              FindCharacter(kGhostPlaceToMove,
-                            neighbours_map.at(ghost_.direction))) {
-     return ghost_.direction;
+                           neighbours_map.at(ghost_.direction))) {
+    return ghost_.direction;
   } else if (!FindCharacter(kGhostPlaceToMove,
                             neighbours_map.at(ghost_.direction))) {
-   // direction_to_avoid = ghost_.direction;
+    // direction_to_avoid = ghost_.direction;
   }
 
   random_device random_seed;
@@ -106,10 +103,10 @@ int Ghost::GhostMoveDirection(const map<int, wchar_t>& neighbours_map) {
 
   while (true) {
     direction = moving_direction(random_generator);
-      if ((direction != direction_to_avoid) &&
-          FindCharacter(kGhostPlaceToMove, neighbours_map.at(direction))) {
-        break;
-      }
+    if ((direction != direction_to_avoid) &&
+        FindCharacter(kGhostPlaceToMove, neighbours_map.at(direction))) {
+      break;
+    }
   }
   return direction;
 }

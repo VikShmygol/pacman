@@ -9,7 +9,7 @@ using namespace std;
 //class Ghost;
 
 struct LevelData {
-  int pacman_lives = 3;
+  int pacman_lives;
   int score = 0;
   int num_dots = 0;
   vector<Ghost> ghosts;

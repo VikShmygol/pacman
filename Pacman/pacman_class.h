@@ -2,11 +2,14 @@
 #include "object_class.h"
 
 struct PacmanData {
+  int lives;
+  int score;
+
   wchar_t pacman_look;
-  bool is_alive = true;
+
 };
 
-class Pacman : public Object {
+class Pacman : public DynObject {
  public:
  
   Pacman(int location_row, int location_col);

@@ -7,7 +7,7 @@
 
 
 Pacman::Pacman(int row, int col)
-    : Object("ghost", row, col), pacman_{'v',  true} {}
+    : DynObject("pacman", row, col), pacman_{3, 0, 'v'} {}
 
 void Pacman::Action(vector<wstring>& level_map) {
   int curr_location_row = get_location_row();

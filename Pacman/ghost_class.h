@@ -16,7 +16,7 @@ struct GhostData {
   OnOffTimer timer_to_blink;
 };
 
-class Ghost : public Object {
+class Ghost : public DynObject {
  public:
   Ghost(int location_row, int location_col);
 
