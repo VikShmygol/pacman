@@ -16,7 +16,6 @@ void Level::LoadLevel(const string& level_filename,
   /* Extracting the map data from Unicode file
      into the vector of <wstring> */
   wstring line;
-  unsigned int size_rows = 0, size_cols = 0;
   locale::global(std::locale("fr_FR.UTF-8"));
   const locale empty_locale = std::locale::empty();
   typedef codecvt_utf8_utf16<wchar_t> converter_type;
@@ -25,15 +24,15 @@ void Level::LoadLevel(const string& level_filename,
   wifstream stream(level_filename);
   stream.imbue(utf8_locale);
 
-  stream >> size_rows >> size_cols;
+  stream >> level_.map_height >> level_.map_width;
   getline(stream, line);
   while (getline(stream, line)) {
     level_map.push_back(line);
   }
 
   // Counting ghosts and dots
-  for (int i = 0; i < size_rows; ++i) {
-    for (int j = 0; j < size_cols; ++j) {
+  for (int i = 0; i < level_.map_height; ++i) {
+    for (int j = 0; j < level_.map_width; ++j) {
       switch (level_map[i][j]) {
         case kSuperDotLook:
         case kRegularDotLook:
@@ -59,7 +58,7 @@ void Level::ProcessingLevel(vector<wstring>& map) {
 
   level_.collisions.push_back(level_.pacman[0].Action(map));
 
-  if (level_.timer_to_scare_ghosts.Check(10000ms)) {
+  if (!level_.timer_to_scare_ghosts.Check(10000ms)) {
     EncourageGhosts();
   }
 
@@ -68,6 +67,9 @@ void Level::ProcessingLevel(vector<wstring>& map) {
   }
   level_.collisions.clear();
 }
+size_t Level::get_map_height() const { return level_.map_height; }
+
+size_t Level::get_map_width() const {return level_.map_width;}
 
 int Level::get_pacman_lives() const { return level_.pacman_lives; }
 
@@ -91,6 +93,3 @@ void Level::EncourageGhosts() {
     g.reset_scared();
   }
 }
-/*void Level::AddCollision(Collision collision) {
-  level_.collisions.push_back(collision);
-}*/

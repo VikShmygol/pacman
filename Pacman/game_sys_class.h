@@ -12,6 +12,7 @@ struct GameData {
   Level level;
   unsigned int current_level = 0;
   vector<wstring> map;
+  vector<wstring> previous_map;
 };
 
 
@@ -23,5 +24,7 @@ class GameSys {
 
  private:
   GameData game_;
-
+  void ScreenUpdate(vector<wstring>& map, size_t map_height, size_t map_width);
+  void SetCursorPosition(int row, int col);
+  void ShowConsoleCursor(bool show_flag);
 };

@@ -50,7 +50,7 @@ Collision Ghost::Action(vector<wstring>& level_map) {
   // ghost_.blinking = true;
   wchar_t GhostLook = kGhostLook;
 
-  if (ghost_.is_scared && !ghost_.timer_to_blink.Activate(700ms, 300ms)) {
+  if (ghost_.is_scared && !ghost_.timer_to_blink.Activate(200ms, 200ms)) {
     GhostLook = ghost_.substitute_symbol;
   }
 
