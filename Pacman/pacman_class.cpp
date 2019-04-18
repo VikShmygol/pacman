@@ -44,29 +44,40 @@ Collision Pacman::Action(vector<wstring>& level_map) {
     is_moved =
         FindCharacter(kPacmanPlaceToMove, direction_neighbours_map.at(input));
   }
+ 
   wchar_t obj_look = L' ';
+ 
   if (is_moved) {
+    bool ghost_ahead = (direction_neighbours_map.at(input) == kGhostLook);
     level_map[curr_location_row][curr_location_col] = ' ';
     switch (input) {
       case 'w':
         obj_look = level_map[--curr_location_row][curr_location_col];
-        level_map[curr_location_row][curr_location_col] = kPacmanLook[0];
-        set_location_row(curr_location_row);
+        if (!ghost_ahead) {
+          level_map[curr_location_row][curr_location_col] = kPacmanLook[0];
+          set_location_row(curr_location_row);
+        }
         break;
       case 'd':
         obj_look = level_map[curr_location_row][++curr_location_col];
-        level_map[curr_location_row][curr_location_col] = kPacmanLook[1];
-        set_location_col(curr_location_col);
+        if (!ghost_ahead) {
+          level_map[curr_location_row][curr_location_col] = kPacmanLook[1];
+          set_location_col(curr_location_col);
+        }
         break;
       case 's':
         obj_look = level_map[++curr_location_row][curr_location_col];
-        level_map[curr_location_row][curr_location_col] = kPacmanLook[2];
-        set_location_row(curr_location_row);
+        if (!ghost_ahead) {
+          level_map[curr_location_row][curr_location_col] = kPacmanLook[2];
+          set_location_row(curr_location_row);
+        }
         break;
       case 'a':
         obj_look = level_map[curr_location_row][--curr_location_col];
-        level_map[curr_location_row][curr_location_col] = kPacmanLook[3];
-        set_location_col(curr_location_col);
+        if (!ghost_ahead) {
+          level_map[curr_location_row][curr_location_col] = kPacmanLook[3];
+          set_location_col(curr_location_col);
+        }
         break;
     }
     return Collision(this, curr_location_row, curr_location_col, obj_look);
