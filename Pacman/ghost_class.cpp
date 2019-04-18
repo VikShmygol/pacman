@@ -6,9 +6,7 @@
 
 
 Ghost::Ghost(int row, int col)
-    : DynObject("ghost", row, col), ghost_{false, false,       true,
-                                                     0,     row,         col,
-                                                     '.',   OnOffTimer()} {}
+    : DynObject("ghost", row, col), ghost_{false, false, true, 0,  '.',  OnOffTimer()} {}
 
 Collision Ghost::Action(vector<wstring>& level_map) {
   int curr_location_row = get_location_row();
@@ -38,6 +36,7 @@ Collision Ghost::Action(vector<wstring>& level_map) {
 
   ghost_.direction = GhostMoveDirection(direction_neighbours_map);
 
+
   if (!ghost_.first_move) {
     level_map[curr_location_row][curr_location_col] = ghost_.substitute_symbol;
   } else {
@@ -47,41 +46,55 @@ Collision Ghost::Action(vector<wstring>& level_map) {
 
   ghost_.substitute_symbol = direction_neighbours_map.at(ghost_.direction);
 
-  // ghost_.blinking = true;
-  wchar_t GhostLook = kGhostLook;
-
-  if (ghost_.is_scared && !ghost_.timer_to_blink.Activate(200ms, 200ms)) {
-    GhostLook = ghost_.substitute_symbol;
+  if (FindCharacter(kPacmanLook, ghost_.substitute_symbol)) {
+    ghost_.substitute_symbol = L' ';
   }
 
+  wchar_t GhostLook = kGhostLook;
+
+  if (ghost_.is_scared && !ghost_.timer_to_blink.Activate(500ms, 500ms)) {
+    GhostLook = ghost_.substitute_symbol;
+  }
+  wchar_t obj_look = L' ';
   switch (ghost_.direction) {
     case 0:
-      level_map[--curr_location_row][curr_location_col] = GhostLook;
+      obj_look = level_map[--curr_location_row][curr_location_col];
+      level_map[curr_location_row][curr_location_col] = GhostLook;
       set_location_row(curr_location_row);
       break;
     case 1:
-      level_map[curr_location_row][++curr_location_col] = GhostLook;
+      obj_look = level_map[curr_location_row][++curr_location_col];
+      level_map[curr_location_row][curr_location_col] = GhostLook;
       set_location_col(curr_location_col);
       break;
     case 2:
-      level_map[++curr_location_row][curr_location_col] = GhostLook;
+      obj_look = level_map[++curr_location_row][curr_location_col];
+      level_map[curr_location_row][curr_location_col] = GhostLook;
       set_location_row(curr_location_row);
       break;
     case 3:
-      level_map[curr_location_row][--curr_location_col] = GhostLook;
+      obj_look = level_map[curr_location_row][--curr_location_col];
+      level_map[curr_location_row][curr_location_col] = GhostLook;
       set_location_col(curr_location_col);
       break;
   }
-  return Collision(this, 0, 0, L' ');
+  if (FindCharacter(kPacmanLook, obj_look)) {
+    return Collision(this, curr_location_row, curr_location_col, obj_look);
+  }
+  return Collision(this, 0, 0, obj_look);  // collision with counter object's coordinates (0, 0) will be skipped
 }
 void Ghost::set_to_scared() { ghost_.is_scared = true; }
+
 bool Ghost::get_is_scared() const { return ghost_.is_scared; }
+
 void Ghost::reset_scared() { ghost_.is_scared = false; }
+
 void Ghost::Resurrection(vector<wstring>& map) {
   map[get_location_row()][get_location_col()] = ghost_.substitute_symbol;
-  map[ghost_.resurrection_row][ghost_.resurrection_col] = kGhostLook;
-  set_location_row(ghost_.resurrection_row);
-  set_location_col(ghost_.resurrection_col);
+  ghost_.substitute_symbol = L' ';
+  set_to_ressurection_row();
+  set_to_ressurection_col();
+  map[get_location_row()][get_location_col()] = kGhostLook;
   ghost_.is_scared = false;
 }
 

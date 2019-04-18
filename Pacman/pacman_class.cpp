@@ -7,7 +7,7 @@
 
 
 Pacman::Pacman(int row, int col)
-    : DynObject("pacman", row, col), pacman_{3, 0, 'v'} {}
+    : DynObject("pacman", row, col), pacman_{'v'} {}
 
 Collision Pacman::Action(vector<wstring>& level_map) {
   int curr_location_row = get_location_row();
@@ -47,7 +47,7 @@ Collision Pacman::Action(vector<wstring>& level_map) {
   wchar_t obj_look = L' ';
   if (is_moved) {
     level_map[curr_location_row][curr_location_col] = ' ';
-      switch (input) {
+    switch (input) {
       case 'w':
         obj_look = level_map[--curr_location_row][curr_location_col];
         level_map[curr_location_row][curr_location_col] = kPacmanLook[0];
@@ -71,5 +71,13 @@ Collision Pacman::Action(vector<wstring>& level_map) {
     }
     return Collision(this, curr_location_row, curr_location_col, obj_look);
   }
-  return Collision(this, 0, 0, obj_look); //collision with counter object's coordinates will be skipped
+  return Collision(this, 0, 0, obj_look);  // collision with counter object's
+                                           // coordinates (0, 0) will be skipped
+}
+
+void Pacman::Ressurection(vector<wstring>& map) {
+  map[get_location_row()][get_location_col()] = L' ';
+  set_to_ressurection_row();
+  set_to_ressurection_col();
+  map[get_location_row()][get_location_col()] = L'>';
 }

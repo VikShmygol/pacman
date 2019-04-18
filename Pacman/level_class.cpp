@@ -7,8 +7,8 @@
 #include <sstream>
 #include <string>
 #include "common_functions.h"
-#include "ghost_class.h"
 #include "constants.h"
+#include "ghost_class.h"
 
 
 void Level::LoadLevel(const string& level_filename,
@@ -42,8 +42,6 @@ void Level::LoadLevel(const string& level_filename,
           level_.ghosts.push_back(Ghost(i, j));
           break;
         case '>':
-          // level_.pacman.set_location_col(i);
-          // level_.pacman.set_location_row(j);
           level_.pacman.push_back(Pacman(i, j));
           break;
       }
@@ -51,25 +49,32 @@ void Level::LoadLevel(const string& level_filename,
   }
 }
 
+void Level::StartOverLevel(vector<wstring>& map) {
+  decrement_pacman_lives();
+  level_.pacman[0].Ressurection(map);
+  for (Ghost& g : level_.ghosts) {
+    g.Resurrection(map);
+  }
+}
+
 void Level::ProcessingLevel(vector<wstring>& map) {
-  for (auto& ghost : level_.ghosts) {
-    level_.collisions.push_back(ghost.Action(map));
+  if (!level_.timer_ghost_slow_down.Check(350ms)) {
+    for (auto& ghost : level_.ghosts) {
+      ghost.Action(map).Processing(this, map, level_.ghosts);
+    }
+    level_.timer_ghost_slow_down.Start();
   }
 
-  level_.collisions.push_back(level_.pacman[0].Action(map));
+  level_.pacman[0].Action(map).Processing(this, map, level_.ghosts);
 
   if (!level_.timer_to_scare_ghosts.Check(10000ms)) {
     EncourageGhosts();
   }
-
-  for (auto& collision : level_.collisions) {
-    collision.Processing(this, map, level_.ghosts);
-  }
-  level_.collisions.clear();
 }
+
 size_t Level::get_map_height() const { return level_.map_height; }
 
-size_t Level::get_map_width() const {return level_.map_width;}
+size_t Level::get_map_width() const { return level_.map_width; }
 
 int Level::get_pacman_lives() const { return level_.pacman_lives; }
 
@@ -81,13 +86,16 @@ void Level::update_score(int points) {
   level_.num_dots--;
   level_.score += points;
 }
+
 int Level::get_score() const { return level_.score; }
+
 void Level::ScareGhosts() {
   for (Ghost& g : level_.ghosts) {
     g.set_to_scared();
   }
   level_.timer_to_scare_ghosts.Start();
 }
+
 void Level::EncourageGhosts() {
   for (Ghost& g : level_.ghosts) {
     g.reset_scared();

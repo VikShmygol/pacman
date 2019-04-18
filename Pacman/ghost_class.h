@@ -10,8 +10,7 @@ struct GhostData {
   bool is_scared;
   bool first_move;
   int direction;
-  const int resurrection_row;
-  const int resurrection_col;
+
   wchar_t substitute_symbol;
   OnOffTimer timer_to_blink;
 };

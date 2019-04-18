@@ -46,7 +46,11 @@ void GameSys::ScreenUpdate(vector<wstring>& map, size_t map_height, size_t map_w
       wcout << map[i][j];
     }
   }
-  cout.flush();
+  cout << endl;
+  cout << " Score: " << game_.level.get_score()
+       << "	Lives: " << game_.level.get_pacman_lives()
+	  << endl;
+  wcout.flush();
   game_.previous_map = map;
 }
     
