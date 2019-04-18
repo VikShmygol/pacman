@@ -82,8 +82,9 @@ void Level::decrement_pacman_lives() { level_.pacman_lives--; };
 
 int Level::get_num_dots() const { return level_.num_dots; }
 
+void Level::decrement_num_dots() { --level_.num_dots; }
+
 void Level::update_score(int points) {
-  level_.num_dots--;
   level_.score += points;
 }
 

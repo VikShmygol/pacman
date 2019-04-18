@@ -32,6 +32,7 @@ class Level {
   int get_pacman_lives() const;
   void decrement_pacman_lives();
   int get_num_dots() const;
+  void decrement_num_dots();
   void update_score(int points);
   int get_score() const;
   void ScareGhosts();
