@@ -28,7 +28,6 @@ void GameSys::GameProcessing(const vector<string>& level_filename_vector,
     } else if (!game_.level.get_pacman_lives()) {
       cout << "Try again!" << endl;
       system("PAUSE");
-      game_.level.LoadLevel(level_filename_vector[game_.current_level], map);
     } else {
       game_.level.ProcessingLevel(map);
     }

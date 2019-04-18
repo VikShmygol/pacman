@@ -7,8 +7,6 @@
 
 using namespace std;
 
-// class Ghost;
-
 struct LevelData {
   bool scaring_mode = false;  // if scaring mode is active, ghosts are vulnerable to Pacman
   size_t map_height;
@@ -18,7 +16,6 @@ struct LevelData {
   int num_dots = 0;
   vector<Ghost> ghosts;
   vector<Pacman> pacman;
-  vector<Collision> collisions;
   DelayOffTimer timer_to_scare_ghosts;
   DelayOffTimer timer_ghost_slow_down;
 };
