@@ -10,7 +10,7 @@
 
 
 int main(void) {
-  vector<string> vector_filename{"Level_1.txt"};
+  vector<string> vector_filename{"Level_1.txt", "Level_2.txt"};
   vector<wstring> map;
   GameSys game;
   try {

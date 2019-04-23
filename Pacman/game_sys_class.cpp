@@ -47,6 +47,7 @@ void GameSys::ScreenUpdate(vector<wstring>& map, size_t map_height, size_t map_w
   cout << " Score: " << level_.score
        << "	Lives: " << level_.pacman_lives
 	  << endl;
+  cout << "Level " << game_.current_level << endl;
   cout << level_.num_dots << endl;
   wcout.flush();
 }
@@ -71,6 +72,10 @@ void GameSys::ShowConsoleCursor(bool show_flag) {
 
 void GameSys::LoadLevel(const string& level_filename,
                       vector<wstring>& level_map) {
+  level_map.clear();
+  level_.ghosts.clear();
+  level_.pacman.clear();
+
   /* Extracting the map data from Unicode file
      into the vector of <wstring> */
   wstring line;

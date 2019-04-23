@@ -77,5 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Level_1.txt" />
+    <Text Include="Level_2.txt" />
   </ItemGroup>
 </Project>
