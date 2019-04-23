@@ -156,6 +156,6 @@ void GameSys::ScareGhosts() {
 
 void GameSys::EncourageGhosts() {
   for (Ghost& g : level_.ghosts) {
-    g.reset_scared();
+   g.reset_scared();
   }
 }

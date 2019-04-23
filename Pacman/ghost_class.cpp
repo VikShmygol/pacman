@@ -44,10 +44,9 @@ Collision Ghost::Action(vector<wstring>& level_map) {
     ghost_.first_move = false;
   }
 
-  ghost_.substitute_symbol = direction_neighbours_map.at(ghost_.direction);
-
-  if (FindCharacter(kPacmanLook, ghost_.substitute_symbol)) {
-    ghost_.substitute_symbol = L' ';
+  if (!FindCharacter(kPacmanLook,
+                     direction_neighbours_map.at(ghost_.direction))) {
+    ghost_.substitute_symbol = direction_neighbours_map.at(ghost_.direction);
   }
 
   wchar_t GhostLook = kGhostLook;

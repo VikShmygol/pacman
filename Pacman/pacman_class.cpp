@@ -38,6 +38,8 @@ Collision Pacman::Action(vector<wstring>& level_map) {
 
   if (_kbhit()) {
     input = _getch();
+  } else {
+    return Collision(this, 0, 0, L' ');
   }
 
   if (input == 'w' || input == 'a' || input == 's' || input == 'd') {
