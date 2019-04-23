@@ -9,13 +9,16 @@
 //#define WIN32_LEAN_AND_MEAN
 
 
-
-
 int main(void) {
   vector<string> vector_filename{"Level_1.txt"};
   vector<wstring> map;
   GameSys game;
-  game.GameProcessing(vector_filename, map);
+  try {
+    game.GameProcessing(vector_filename, map);
+  } catch (exception& ex) {
+    cerr << ex.what() << endl;
+    system("PAUSE");
+  }
 
 
 

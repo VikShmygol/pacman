@@ -48,7 +48,8 @@ Collision Pacman::Action(vector<wstring>& level_map) {
   wchar_t obj_look = L' ';
  
   if (is_moved) {
-    bool ghost_ahead = (direction_neighbours_map.at(input) == kGhostLook);
+    bool ghost_ahead = (direction_neighbours_map.at(input) == kGhostLook ||
+                        direction_neighbours_map.at(input) == kGhostLookScared);
     level_map[curr_location_row][curr_location_col] = ' ';
     switch (input) {
       case 'w':

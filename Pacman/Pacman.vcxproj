@@ -160,7 +160,6 @@
     <ClInclude Include="object_class.h" />
     <ClInclude Include="game_sys_class.h" />
     <ClInclude Include="ghost_class.h" />
-    <ClInclude Include="level_class.h" />
     <ClInclude Include="on_off_timer_class.h" />
     <ClInclude Include="pacman_class.h" />
     <ClInclude Include="pch.h" />
@@ -171,7 +170,6 @@
     <ClCompile Include="object_class.cpp" />
     <ClCompile Include="game_sys_class.cpp" />
     <ClCompile Include="ghost_class.cpp" />
-    <ClCompile Include="level_class.cpp" />
     <ClCompile Include="on_off_timer_class.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="pacman_class.cpp" />

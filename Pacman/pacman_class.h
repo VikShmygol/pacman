@@ -3,6 +3,7 @@
 
 struct PacmanData {
   wchar_t pacman_look;
+  
 };
 
 class Pacman : public DynObject {
@@ -15,6 +16,7 @@ class Pacman : public DynObject {
 
   private:
   PacmanData pacman_;
+  // vector<Ghost>& ghosts;
 };
 
 
