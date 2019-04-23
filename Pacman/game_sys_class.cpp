@@ -47,8 +47,8 @@ void GameSys::ScreenUpdate(vector<wstring>& map, size_t map_height, size_t map_w
   cout << " Score: " << level_.score
        << "	Lives: " << level_.pacman_lives
 	  << endl;
-  cout << "Level " << game_.current_level << endl;
-  cout << level_.num_dots << endl;
+  cout << " Level " << game_.current_level << endl;
+
   wcout.flush();
 }
     
